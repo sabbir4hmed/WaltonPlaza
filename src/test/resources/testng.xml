@@ -4,9 +4,10 @@
     <listeners>
         <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
     </listeners>
-    <test name="Test" verbose="2">
+    <test name="Test">
         <classes>
             <class name="Tests.HomeTest"/>
+            <class name="Tests.LoginTest"></class>
         </classes>
     </test>
 </suite>
