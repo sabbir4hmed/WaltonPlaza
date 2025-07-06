@@ -8,7 +8,7 @@
         <classes>
             <class name="Tests.HomeTest"/>
             <class name="Tests.LoginTest"></class>
-
+            <class name="Tests.DashboardTest"></class>
         </classes>
     </test>
 </suite>

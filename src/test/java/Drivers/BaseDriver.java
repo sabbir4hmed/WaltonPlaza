@@ -3,6 +3,7 @@ package Drivers;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -20,6 +21,11 @@ public class BaseDriver {
         {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
+        }
+        else if (browser.contains(("edge")))
+        {
+            WebDriverManager.edgedriver().setup();
+            driver = new EdgeDriver();
         }
 
         PageDriver.getInstance().setWebDriver(driver);
