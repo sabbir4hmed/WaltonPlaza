@@ -35,4 +35,26 @@ public class DashboardTest extends BaseDriver
 
     }
 
+    @Test(priority = 3)
+    @Description("THis is the test of click the search location area")
+    @Severity(SeverityLevel.CRITICAL)
+    public void searchlocationbox() throws InterruptedException {
+        DashboardPage dashboardPage = new DashboardPage();
+        PageFactory.initElements(PageDriver.getCurrentDriver(),dashboardPage);
+        dashboardPage.clicklocationsearcharea(PageDriver.getCurrentDriver());
+        Thread.sleep(2000);
+
+    }
+
+    @Test(priority = 4)
+    @Description("THis is the test of click the search location area")
+    @Severity(SeverityLevel.CRITICAL)
+    public void searchlocationselect() throws InterruptedException {
+        DashboardPage dashboardPage = new DashboardPage();
+        PageFactory.initElements(PageDriver.getCurrentDriver(),dashboardPage);
+        dashboardPage.clicklocationshowbutton(PageDriver.getCurrentDriver());
+        Thread.sleep(2000);
+
+    }
+
 }

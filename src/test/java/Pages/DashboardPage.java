@@ -80,17 +80,63 @@ public class DashboardPage
     {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.elementToBeClickable(manuallocationbutton));
+            wait.until(ExpectedConditions.elementToBeClickable(locationsearch));
 
             manuallocationbutton.isDisplayed();
-            manuallocationbutton.click();
+            manuallocationbutton.sendKeys("Tangail");
 
-            attatchScreenshot(driver, "Manual location button is displayed and clicked");
+            attatchScreenshot(driver, "Tangail Location is displayed ");
 
         } catch (Exception e) {
 
             try {
-                attatchScreenshot(driver, "Manual location button is not displayed and clicked");
+                attatchScreenshot(driver, "Tangail Location is not displayed ");
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Step("Manual Location Button will be Displayed and Clicked")
+    public void clicklocationshowbutton(WebDriver driver)
+    {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.elementToBeClickable(locationsearch));
+
+            manuallocationbutton.isDisplayed();
+            manuallocationbutton.sendKeys("Tangail");
+
+            attatchScreenshot(driver, "Tangail Location is placed");
+
+        } catch (Exception e) {
+
+            try {
+                attatchScreenshot(driver, "Tangail Location is not placed");
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Step("Location Tangail Select")
+    public void clicklocationsearcharea(WebDriver driver)
+    {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.elementToBeClickable(locationselect));
+
+            manuallocationbutton.isDisplayed();
+            manuallocationbutton.click();
+
+            attatchScreenshot(driver, "Tangail location button is displayed and clicked");
+
+        } catch (Exception e) {
+
+            try {
+                attatchScreenshot(driver, "Tangail location button is not displayed and clicked");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
