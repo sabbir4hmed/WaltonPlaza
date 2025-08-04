@@ -28,7 +28,7 @@ public class DashboardPage
     @FindAll(
             {
                     @FindBy(xpath = "//div[contains(text(),'Select Manual Location')]"),
-                    @FindBy(css = "div[class='Dropdowns_items__Gjh2w'] div:nth-child(2) div:nth-child(1)")
+                    @FindBy(css = "div[class='Navbar_locationContainer___YJIP'] div[class='LocationInputOnNavbar_container__ldW3l']")
             }
     )
 
@@ -47,7 +47,7 @@ public class DashboardPage
 
     @FindAll(
             {
-                    @FindBy(xpath = "//div[contains(text(),'Tangail Sadar, Tangail')]"),
+                    @FindBy(xpath = "//div[@class='Dropdowns_item__V5QL7']/div[text()='Tangail Sadar, Tangail']"),
                     @FindBy(css = "div[class='Dropdowns_items__Gjh2w'] div:nth-child(1) div:nth-child(1)")
             }
     )
@@ -80,17 +80,17 @@ public class DashboardPage
     {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.elementToBeClickable(locationsearch));
+            wait.until(ExpectedConditions.elementToBeClickable(manuallocationbutton));
 
             manuallocationbutton.isDisplayed();
-            manuallocationbutton.sendKeys("Tangail");
+            manuallocationbutton.click();
 
-            attatchScreenshot(driver, "Tangail Location is displayed ");
+            attatchScreenshot(driver, "Manual Location Button Clicked ");
 
         } catch (Exception e) {
 
             try {
-                attatchScreenshot(driver, "Tangail Location is not displayed ");
+                attatchScreenshot(driver, "Manual Location Button is not Clicked ");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -99,14 +99,14 @@ public class DashboardPage
     }
 
     @Step("Manual Location Button will be Displayed and Clicked")
-    public void clicklocationshowbutton(WebDriver driver)
+    public void clicklocationsearcharea (WebDriver driver)
     {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(locationsearch));
 
-            manuallocationbutton.isDisplayed();
-            manuallocationbutton.sendKeys("Tangail");
+           locationsearch.isDisplayed();
+           locationsearch.sendKeys("Tangail Sadar");
 
             attatchScreenshot(driver, "Tangail Location is placed");
 
@@ -122,14 +122,14 @@ public class DashboardPage
     }
 
     @Step("Location Tangail Select")
-    public void clicklocationsearcharea(WebDriver driver)
+    public void clicklocationshowbutton(WebDriver driver)
     {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(locationselect));
 
-            manuallocationbutton.isDisplayed();
-            manuallocationbutton.click();
+            locationselect.isDisplayed();
+            locationselect.click();
 
             attatchScreenshot(driver, "Tangail location button is displayed and clicked");
 
