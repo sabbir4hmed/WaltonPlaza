@@ -36,7 +36,7 @@ public class DashboardTest extends BaseDriver
     }
 
     @Test(priority = 3)
-    @Description("THis is the test of click the search location area")
+    @Description("THis is the test of show the search location area")
     @Severity(SeverityLevel.CRITICAL)
     public void searchlocationbox() throws InterruptedException {
         DashboardPage dashboardPage = new DashboardPage();
