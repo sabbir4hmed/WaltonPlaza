@@ -28,7 +28,7 @@ public class DashboardPage
     @FindAll(
             {
                     @FindBy(xpath = "//div[contains(text(),'Select Manual Location')]"),
-                    @FindBy(css = "div[class='Navbar_locationContainer___YJIP'] div[class='LocationInputOnNavbar_container__ldW3l']")
+                    @FindBy(css = "div[class='Dropdowns_items__Gjh2w'] div:nth-child(2) div:nth-child(1)")
             }
     )
 
@@ -47,7 +47,7 @@ public class DashboardPage
 
     @FindAll(
             {
-                    @FindBy(xpath = "//div[@class='Dropdowns_item__V5QL7']/div[text()='Tangail Sadar, Tangail']"),
+                    @FindBy(xpath = "//div[contains(text(),'Tangail Sadar, Tangail')]"),
                     @FindBy(css = "div[class='Dropdowns_items__Gjh2w'] div:nth-child(1) div:nth-child(1)")
             }
     )
@@ -85,12 +85,12 @@ public class DashboardPage
             manuallocationbutton.isDisplayed();
             manuallocationbutton.click();
 
-            attatchScreenshot(driver, "Manual Location Button Clicked ");
+            attatchScreenshot(driver, "Manual Location button clicked ");
 
         } catch (Exception e) {
 
             try {
-                attatchScreenshot(driver, "Manual Location Button is not Clicked ");
+                attatchScreenshot(driver, "Manual Location button is not clicked ");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -105,8 +105,8 @@ public class DashboardPage
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(locationsearch));
 
-           locationsearch.isDisplayed();
-           locationsearch.sendKeys("Tangail Sadar");
+            locationsearch.isDisplayed();
+            locationsearch.sendKeys("Tangail");
 
             attatchScreenshot(driver, "Tangail Location is placed");
 
