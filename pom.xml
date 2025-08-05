@@ -32,6 +32,21 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-devtools-v138</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.seleniumhq.selenium</groupId>
+                    <artifactId>selenium-devtools-v137</artifactId>
+                </exclusion>
+            </exclusions>
+
+
+
+
         </dependency>
 
         <!-- Allure TestNG -->
@@ -61,6 +76,11 @@
             <artifactId>logback-classic</artifactId>
             <version>1.4.14</version>
         </dependency>
+
+
+
+
+
     </dependencies>
 
     <build>
