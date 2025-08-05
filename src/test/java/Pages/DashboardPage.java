@@ -10,8 +10,8 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.log4testng.Logger;
 
 import java.time.Duration;
 
@@ -55,7 +55,7 @@ public class DashboardPage
     )
 
     public WebElement locationselect;
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(DashboardPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(DashboardPage.class);
 
 
     @Step("Location Button will be Displayed and Clicked")
