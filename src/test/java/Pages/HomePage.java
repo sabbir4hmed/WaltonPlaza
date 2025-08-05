@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.log4testng.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +31,7 @@ public class HomePage {
             }
     )
     public WebElement loginbutton;
+    public Logger logger;
 
     @Step("Click on the login button")
     public void clickloginbtn(WebDriver driver)
@@ -46,7 +48,7 @@ public class HomePage {
             Files.createDirectories(destinationfile.getParentFile().toPath());
             Files.copy(sourcefile.toPath(), destinationfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-            Reporter.log("Login button clicked successfully. Screenshot saved at: " + destinationfile.getAbsolutePath(), true);
+            logger.info("Login button clicked successfully");
             Assert.assertTrue(loginbutton.isDisplayed());
 
         } catch (Exception e) {
@@ -57,7 +59,7 @@ public class HomePage {
                 Files.copy(sourcefile.toPath(), destinationfile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
                 attatchScreenshot(driver, "loginbutton_click_fail");
-                Reporter.log("Login button click failed or not displayed. Screenshot saved at: " + destinationfile.getAbsolutePath(),true);
+                logger.info("Login button clicked not successfully");
 
             } catch (IOException ex) {
                 throw new RuntimeException(ex);

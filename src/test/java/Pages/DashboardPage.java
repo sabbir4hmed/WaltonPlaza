@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.log4testng.Logger;
 
 import java.time.Duration;
 
@@ -53,6 +54,7 @@ public class DashboardPage
     )
 
     public WebElement locationselect;
+    public Logger logger;
 
     @Step("Location Button will be Displayed and Clicked")
     public void locationbutton(WebDriver driver)
@@ -63,10 +65,12 @@ public class DashboardPage
             navbarlocationbutton.isDisplayed();
             navbarlocationbutton.click();
             attatchScreenshot(driver, "Location Button is displayed & Clicked");
+            logger.info("Location button is displayed & clicked");
         } catch (Exception e) {
             try
             {
                 attatchScreenshot(driver, "Location Button is not Displayed or Clicked");
+                logger.info("Location button is not displayed or clicked");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -86,11 +90,13 @@ public class DashboardPage
             manuallocationbutton.click();
 
             attatchScreenshot(driver, "Manual Location button clicked ");
+            logger.info("Manual Location button clicked ");
 
         } catch (Exception e) {
 
             try {
                 attatchScreenshot(driver, "Manual Location button is not clicked ");
+                logger.info("Manual Location button is not clicked ");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -109,11 +115,13 @@ public class DashboardPage
             locationsearch.sendKeys("Tangail");
 
             attatchScreenshot(driver, "Tangail Location is placed");
+            logger.info("Location is placed in placehold area");
 
         } catch (Exception e) {
 
             try {
                 attatchScreenshot(driver, "Tangail Location is not placed");
+                logger.info("Location is not placed in placehold area");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -132,11 +140,13 @@ public class DashboardPage
             locationselect.click();
 
             attatchScreenshot(driver, "Tangail location button is displayed and clicked");
+            logger.info("LOcation button is diplayed and clicked");
 
         } catch (Exception e) {
 
             try {
                 attatchScreenshot(driver, "Tangail location button is not displayed and clicked");
+                logger.info("LOcation button is not diplayed or clicked");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

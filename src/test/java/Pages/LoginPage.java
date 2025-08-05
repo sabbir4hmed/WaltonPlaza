@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import org.testng.log4testng.Logger;
 
 import static org.testng.Reporter.log;
 
@@ -65,6 +66,7 @@ public class LoginPage
     )
 
     public WebElement loginButton;
+    public Logger logger;
 
     @Step("Verify the login page filed and elements are displayed")
     public void loginpagefield(WebDriver driver)
@@ -76,9 +78,11 @@ public class LoginPage
             phoneInput.isDisplayed();
             phoneInput.sendKeys("01622290146");
             attatchScreenshot(driver, "login_page_field_displayed");
+            logger.info("login page field is displayed");
         } catch (Exception e) {
             try {
                attatchScreenshot(driver, "login_page_field_not_displayed");
+                logger.info("login page field is not displayed");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -97,10 +101,12 @@ public class LoginPage
             loginWithPasswordLink.isDisplayed();
             loginWithPasswordLink.click();
             attatchScreenshot(driver, "login_with_password_link_clicked");
+            logger.info("login with password link clicked");
         } catch (Exception e) {
             try
             {
                 attatchScreenshot(driver, "login_with_password_link_not_clicked");
+                logger.info("login with password link is not clicked");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -117,9 +123,11 @@ public class LoginPage
             emailOrPhoneInput.isDisplayed();
             emailOrPhoneInput.sendKeys("01622290146");
             attatchScreenshot(driver, "email_or_phone_input_displayed");
+            logger.info("email or phone input is displayed");
         } catch (Exception e) {
             try {
                 attatchScreenshot(driver, "email_or_phone_input_not_displayed");
+                logger.info("email or phone input is  not displayed");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -135,9 +143,11 @@ public class LoginPage
             passwordInput.isDisplayed();
             passwordInput.sendKeys("S@bbir4hmed");
             attatchScreenshot(driver, "password_input_displayed");
+            logger.info("password input is displayed");
         } catch (Exception e) {
             try {
                 attatchScreenshot(driver, "password_input_not_displayed");
+                logger.info("password input is not displayed");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -153,10 +163,11 @@ public class LoginPage
             loginButton.isDisplayed();
             loginButton.click();
             attatchScreenshot(driver, "login_button_clicked");
+            logger.info("login button clicked");
         } catch (Exception e) {
             try {
                 attatchScreenshot(driver, "login_button_not_clicked");
-                log("login_button_not_clicked");
+                logger.info("login button not clicked");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
