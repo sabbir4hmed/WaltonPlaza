@@ -13,6 +13,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+
+import org.slf4j.LoggerFactory;
 import org.testng.log4testng.Logger;
 
 import static org.testng.Reporter.log;
@@ -66,7 +68,7 @@ public class LoginPage
     )
 
     public WebElement loginButton;
-    public Logger logger;
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(LoginPage.class);
 
     @Step("Verify the login page filed and elements are displayed")
     public void loginpagefield(WebDriver driver)

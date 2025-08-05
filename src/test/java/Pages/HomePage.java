@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.log4testng.Logger;
@@ -31,7 +32,7 @@ public class HomePage {
             }
     )
     public WebElement loginbutton;
-    public Logger logger;
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(HomePage.class);
 
     @Step("Click on the login button")
     public void clickloginbtn(WebDriver driver)
