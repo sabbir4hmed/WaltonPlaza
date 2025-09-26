@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -15,155 +16,89 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
-public class DashboardPage
-{
+public class DashboardPage {
 
-    @FindAll(
-            {
-                    @FindBy(xpath = "//div[@class='Navbar_locationContainer___YJIP']//div[@class='LocationInputOnNavbar_root__XRGTn']"),
-                    @FindBy(css = "div[class='Navbar_locationContainer___YJIP'] div[class='LocationInputOnNavbar_root__XRGTn']")
-            }
-    )
-
-    public WebElement navbarlocationbutton;
-
-    @FindAll(
-            {
-                    @FindBy(xpath = "//div[contains(text(),'Select Manual Location')]"),
-                    @FindBy(css = "div[class='Dropdowns_items__Gjh2w'] div:nth-child(2) div:nth-child(1)")
-            }
-    )
-
-    public WebElement manuallocationbutton;
-
-
-    @FindAll(
-            {
-                    @FindBy(xpath = "//input[@placeholder='Search your Area']"),
-                    @FindBy(css = "input[placeholder='Search your Area']")
-            }
-    )
-
-    public WebElement locationsearch;
-
-
-    @FindAll(
-            {
-                    @FindBy(xpath = "//div[contains(text(),'Tangail Sadar, Tangail')]"),
-                    @FindBy(css = "div[class='Dropdowns_items__Gjh2w'] div:nth-child(1) div:nth-child(1)")
-            }
-    )
-
-    public WebElement locationselect;
+    private WebDriver driver;
+    private WebDriverWait wait;
     private static final Logger logger = LoggerFactory.getLogger(DashboardPage.class);
 
-
-    @Step("Location Button will be Displayed and Clicked")
-    public void locationbutton(WebDriver driver)
-    {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.elementToBeClickable(navbarlocationbutton));
-            navbarlocationbutton.isDisplayed();
-            navbarlocationbutton.click();
-            attatchScreenshot(driver, "Location Button is displayed & Clicked");
-            logger.info("Location button is displayed & clicked");
-        } catch (Exception e) {
-            try
-            {
-                attatchScreenshot(driver, "Location Button is not Displayed or Clicked");
-                logger.info("Location button is not displayed or clicked");
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-            throw new RuntimeException(e);
-        }
+    // Constructor
+    public DashboardPage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15)); // Increased timeout
+        PageFactory.initElements(driver, this);
     }
 
+    @FindAll({
+            @FindBy(xpath = "//div[@class='Navbar_locationContainer___YJIP']//div[@class='LocationInputOnNavbar_root__XRGTn']"),
+            @FindBy(css = "div[class='Navbar_locationContainer___YJIP'] div[class='LocationInputOnNavbar_root__XRGTn']")
+    })
+    public WebElement navbarlocationbutton;
 
-    @Step("Manual Location Button will be Displayed and Clicked")
-    public void clickmanuallocation(WebDriver driver)
-    {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.elementToBeClickable(manuallocationbutton));
+    @FindAll({
+            @FindBy(xpath = "//div[contains(text(),'Select Manual Location')]"),
+            @FindBy(css = "div[class='Dropdowns_items__Gjh2w'] div:nth-child(2) div:nth-child(1)")
+    })
+    public WebElement manuallocationbutton;
 
-            manuallocationbutton.isDisplayed();
-            manuallocationbutton.click();
+    @FindAll({
+            @FindBy(xpath = "//input[@placeholder='Search your Area']"),
+            @FindBy(css = "input[placeholder='Search your Area']")
+    })
+    public WebElement locationsearch;
 
-            attatchScreenshot(driver, "Manual Location button clicked ");
-            logger.info("Manual Location button clicked ");
+    @FindAll({
+            @FindBy(xpath = "//div[contains(text(),'Tangail Sadar, Tangail')]"),
+            @FindBy(css = "div[class='Dropdowns_items__Gjh2w'] div:nth-child(1) div:nth-child(1)")
+    })
+    public WebElement locationselect;
 
-        } catch (Exception e) {
-
-            try {
-                attatchScreenshot(driver, "Manual Location button is not clicked ");
-                logger.info("Manual Location button is not clicked ");
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-            throw new RuntimeException(e);
-        }
+    @Step("Clicking on location button")
+    public void clickLocationButton(WebDriver currentDriver) {
+        clickElement(navbarlocationbutton, "Location Button is displayed & Clicked", "Location Button is not displayed");
     }
 
-    @Step("Manual Location Button will be Displayed and Clicked")
-    public void clicklocationsearcharea (WebDriver driver)
-    {
+    @Step("Clicking on manual location button")
+    public void clickManualLocation(WebDriver currentDriver) {
+        clickElement(manuallocationbutton, "Manual Location button clicked", "Manual Location button is not clicked");
+    }
+
+    @Step("Entering location in search box")
+    public void enterLocation(String location, WebDriver currentDriver) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(locationsearch));
-
-            locationsearch.isDisplayed();
-            locationsearch.sendKeys("Tangail");
-
-            attatchScreenshot(driver, "Tangail Location is placed");
-            logger.info("Location is placed in placehold area");
-
+            locationsearch.clear();
+            locationsearch.sendKeys(location);
+            attachScreenshot("Location entered: " + location);
+            logger.info("Location entered: {}", location);
         } catch (Exception e) {
-
-            try {
-                attatchScreenshot(driver, "Tangail Location is not placed");
-                logger.info("Location is not placed in placehold area");
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-            throw new RuntimeException(e);
+            attachScreenshot("Failed to enter location: " + location);
+            logger.error("Failed to enter location: {}", location, e);
+            throw new RuntimeException("Failed to enter location: " + location, e);
         }
     }
 
-    @Step("Location Tangail Select")
-    public void clicklocationshowbutton(WebDriver driver)
-    {
+    @Step("Selecting Tangail from search result")
+    public void selectLocation(WebDriver currentDriver) {
+        clickElement(locationselect, "Tangail location selected", "Tangail location not selected");
+    }
+
+    // Common reusable click method
+    private void clickElement(WebElement element, String successMsg, String failMsg) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.elementToBeClickable(locationselect));
-
-            locationselect.isDisplayed();
-            locationselect.click();
-
-            attatchScreenshot(driver, "Tangail location button is displayed and clicked");
-            logger.info("LOcation button is diplayed and clicked");
-
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            element.click();
+            attachScreenshot(successMsg);
+            logger.info(successMsg);
         } catch (Exception e) {
-
-            try {
-                attatchScreenshot(driver, "Tangail location button is not displayed and clicked");
-                logger.info("LOcation button is not diplayed or clicked");
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-            throw new RuntimeException(e);
+            attachScreenshot(failMsg);
+            logger.error(failMsg, e);
+            throw new RuntimeException(failMsg, e);
         }
     }
 
-
-
-
-
-    @Attachment (value = "This is the test of Location selection from Dashboard", type = "image/png")
-    private byte[] attatchScreenshot(WebDriver driver, String dashboardinfo) {
-        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+    @Attachment(value = "{0}", type = "image/png")
+    private byte[] attachScreenshot(String message) {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
-
-
 }

@@ -9,38 +9,43 @@ import io.qameta.allure.SeverityLevel;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
-public class HomePageTest extends BaseDriver {
+public class HomePageTest {
 
-        @BeforeMethod
-        public  void setupdriver()
-        {
-            setup();
-        }
+    private BaseDriver baseDriver;
+    private HomePage homePage;
 
-        @AfterMethod
-        public void teardowndriver()
-        {
-            tearDown();
-        }
+    @BeforeClass
+    public void setupClass() {
+        baseDriver = new BaseDriver();
+        // Don't initialize WebDriver here - it's done at suite level
+        System.out.println("HomePageTest class initialized");
+    }
 
-        @Test(priority = 1)
-        @Description("Login Button Test")
-        @Severity(SeverityLevel.NORMAL)
-        public void testloginbutton()
-        {
-            WebDriver driver = PageDriver.getCurrentDriver();
-            HomePage homePage = PageFactory.initElements(driver, HomePage.class);
+    @BeforeMethod
+    public void setupMethod() {
+        // Navigate to home page before each test method
+        baseDriver.navigateToHome();
 
-            homePage.clickloginbtn(driver);
+        // Initialize page objects
+        WebDriver driver = PageDriver.getCurrentDriver();
+        homePage = PageFactory.initElements(driver, HomePage.class);
+    }
 
-            String currenturl = driver.getCurrentUrl();
+    @Test(priority = 1)
+    @Description("Login Button Test")
+    @Severity(SeverityLevel.NORMAL)
+    public void testloginbutton() throws InterruptedException {
+        WebDriver driver = PageDriver.getCurrentDriver();
 
-            Assert.assertTrue(currenturl.contains("login") || currenturl.contains("Sign in"),
-                    "Login button did not navigate to login page. Current URL: " + currenturl);
-        }
+        homePage.clickloginbtn();
 
+        String currenturl = driver.getCurrentUrl();
+
+        Assert.assertTrue(currenturl.contains("login") || currenturl.contains("Sign in"),
+                "Login button did not navigate to login page. Current URL: " + currenturl);
+
+        Thread.sleep(2000);
+    }
 }

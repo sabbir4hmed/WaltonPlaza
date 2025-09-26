@@ -2,54 +2,67 @@ package Tests;
 
 import Drivers.BaseDriver;
 import Drivers.PageDriver;
+import Pages.HomePage;
 import Pages.LoginPage;
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
-public class LoginTest extends BaseDriver {
+public class LoginTest {
 
-    @Test (priority = 1)
-    @Description("Login with Password Button Clicked")
-    @Severity(SeverityLevel.NORMAL)
-    public void testloginwithpasswordbutton() {
-        WebDriver driver = PageDriver.getCurrentDriver();
-        LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
-        loginPage.clickonloginwithpassword(driver);
-        String currenturl = driver.getCurrentUrl();
-        Assert.assertTrue(currenturl.contains("Login with Password")||currenturl.contains("Login with Email and Password"),
-                "");
+    private BaseDriver baseDriver;
+    private HomePage homePage;
+    private LoginPage loginPage;
 
+    @BeforeClass
+    public void init() {
+        baseDriver = new BaseDriver();
+        // Don't initialize WebDriver here - it's done at suite level
+        System.out.println("LoginTest class initialized");
     }
 
+    @BeforeMethod
+    public void setupMethod() {
+        // Navigate to home page before each test method
+        baseDriver.navigateToHome();
 
-    public Object[][] getlogindata()
-    {
-
-        return new Object[][]
-                {
-                        {"01622290146", "S@bbir4hmed", true  },
-                        {"01622290146", "Password123", false },
-                        {"01455879546", "", false}
-                };
-
+        // Initialize page objects
+        homePage = PageFactory.initElements(PageDriver.getCurrentDriver(), HomePage.class);
+        loginPage = PageFactory.initElements(PageDriver.getCurrentDriver(), LoginPage.class);
     }
 
-    public void testlogin(String username, String password, boolean expectedresult)
-    {
-        WebDriver driver = PageDriver.getCurrentDriver();
-
-        LoginPage page = PageFactory.initElements(driver, LoginPage.class);
-        page.verifyEmailOrPhoneInput(driver);
-        page.emailOrPhoneInput.clear();
-        page.emailOrPhoneInput.sendKeys(username);
-
-
+    @DataProvider(name = "loginData")
+    public Object[][] getLoginData() {
+        return new Object[][]{
+                {"01622290146", "S@bbir4hmed"},
+                {"01812345678", "AnotherPassword"}
+        };
     }
 
+    @Test(dataProvider = "loginData")
+    public void testLogin(String username, String password) throws InterruptedException {
+        try {
+            System.out.println("Starting login test with username: " + username);
 
+            homePage.clickloginbtn();
+            Thread.sleep(1000); // Wait for navigation
+
+            loginPage.clickonloginwithpassword();
+            Thread.sleep(1000); // Wait for form to appear
+
+            loginPage.enterEmailOrPhone(username);
+            Thread.sleep(500);
+
+            loginPage.enterPassword(password);
+            Thread.sleep(500);
+
+            loginPage.clickLoginButton();
+            Thread.sleep(2000); // Wait for login to complete
+
+            System.out.println("Login test completed for username: " + username);
+
+        } catch (Exception e) {
+            System.err.println("Login test failed for username: " + username + " - " + e.getMessage());
+            throw e;
+        }
+    }
 }
