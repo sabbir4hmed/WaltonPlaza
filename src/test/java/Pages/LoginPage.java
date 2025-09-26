@@ -27,14 +27,6 @@ public class LoginPage
                     @FindBy(xpath = "//input[@placeholder=' ']")
             }
     )
-    public WebElement phoneInput;
-
-    @FindAll(
-            {
-                    @FindBy(linkText = "Login with Password"),
-                    @FindBy(xpath = "//a[normalize-space()='Login with Password']")
-            }
-    )
 
     public WebElement loginWithPasswordLink;
 
@@ -70,7 +62,7 @@ public class LoginPage
     public WebElement loginButton;
     private static final Logger logger = LoggerFactory.getLogger(LoginPage.class);
 
-    @Step("Verify the login page filed and elements are displayed")
+/*    @Step("Verify the login page filed and elements are displayed")
     public void loginpagefield(WebDriver driver)
     {
         try
@@ -90,7 +82,7 @@ public class LoginPage
             }
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
 
     @Step("Click on the login with password Link")
